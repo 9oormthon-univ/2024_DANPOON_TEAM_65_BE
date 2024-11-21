@@ -2,10 +2,16 @@ package com.example.interviewgod.domain.user;
 
 import com.example.interviewgod.domain.selfIntroduce.domain.SelfIntroduce;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 public class User {
 

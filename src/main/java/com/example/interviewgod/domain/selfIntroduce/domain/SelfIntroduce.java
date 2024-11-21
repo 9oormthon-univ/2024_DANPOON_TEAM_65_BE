@@ -2,7 +2,13 @@ package com.example.interviewgod.domain.selfIntroduce.domain;
 
 import com.example.interviewgod.domain.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class SelfIntroduce {
     @Id

@@ -1,4 +1,4 @@
-package com.example.interviewgod.domain.question;
+package com.example.interviewgod.domain.question.domain;
 
 import com.example.interviewgod.domain.selfIntroduce.domain.SelfIntroduce;
 import jakarta.persistence.*;
