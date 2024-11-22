@@ -6,6 +6,7 @@ import com.example.interviewgod.domain.question.domain.SubjectiveQuestion;
 import com.example.interviewgod.domain.question.domain.repository.SessionRepository;
 import com.example.interviewgod.domain.question.domain.repository.SubjectiveRepository;
 import com.example.interviewgod.domain.question.dto.gpt.GptSubjectiveDto;
+import com.example.interviewgod.domain.question.dto.request.AllSubjectiveQuestionResponse;
 import com.example.interviewgod.domain.question.dto.request.MakeSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.request.SubmitSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.response.MakeSubjectiveQuestionResponse;
@@ -30,6 +31,7 @@ public class SubjectiveQuestionService {
     private final OpenAiService openAiService;
     private final SelfIntroduceRepository selfIntroduceRepository;
 
+    @Transactional
     public MakeSubjectiveQuestionResponse makeSubjectiveQuestion(MakeSubjectiveQuestionRequest request) {
         SelfIntroduce selfIntroduce = selfIntroduceRepository.findById(request.selfIntroduceId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_SELF_INTRODUCE));
         Integer nextSessionNumber = sessionRepository.findNextSessionNumber(request.selfIntroduceId(), SessionType.SUBJECTIVE);
@@ -54,4 +56,17 @@ public class SubjectiveQuestionService {
         subjectiveQuestion.updateUserResponse(request.answer());
         return new SubmitSubjectiveQuestionResponse(true);
     }
+
+    public AllSubjectiveQuestionResponse findAllSubjectiveQuestion(Long selfIntroduceId) {
+        SelfIntroduce selfIntroduce = selfIntroduceRepository.findById(selfIntroduceId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_SELF_INTRODUCE));
+        List<Integer> sessionIdList = sessionRepository.findAllSessionIdBySelfIntroduceId(selfIntroduceId, SessionType.SUBJECTIVE);
+        List<SubjectiveQuestion> allSubjectiveQuestion = subjectiveRepository.findBySessionIdList(sessionIdList);
+
+        List<AllSubjectiveQuestionResponse.SubjectiveQuestionDto> subjectiveQuestionDtoList = new ArrayList<>();
+        for (SubjectiveQuestion question : allSubjectiveQuestion) {
+            subjectiveQuestionDtoList.add(new AllSubjectiveQuestionResponse.SubjectiveQuestionDto(question.getQuestion(), question.getQuestionNumber(), question.getUserResponse()));
+        }
+        return new AllSubjectiveQuestionResponse(selfIntroduce.getTitle(), selfIntroduce.getContent(), subjectiveQuestionDtoList);
+    }
+
 }
