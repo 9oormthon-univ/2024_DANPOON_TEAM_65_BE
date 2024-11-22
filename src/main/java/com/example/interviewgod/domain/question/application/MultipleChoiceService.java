@@ -12,7 +12,6 @@ import com.example.interviewgod.domain.question.dto.response.MakeMultipleChoiceR
 import com.example.interviewgod.domain.question.dto.response.SubmitAnswerResponse;
 import com.example.interviewgod.domain.selfIntroduce.domain.SelfIntroduce;
 import com.example.interviewgod.domain.selfIntroduce.domain.repository.SelfIntroduceRepository;
-import com.example.interviewgod.global.dto.ResponseDto;
 import com.example.interviewgod.global.error.CommonException;
 import com.example.interviewgod.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +33,10 @@ public class MultipleChoiceService {
     @Transactional
     public MakeMultipleChoiceResponse makeMultipleChoice(MakeMultipleChoiceRequest request) {
         SelfIntroduce selfIntroduce = selfIntroduceRepository.findById(request.selfIntroduceId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_SELF_INTRODUCE));
-        List<Integer> sessionNumberList = sessionRepository.findSessionNumberBySelfIntroduceId(request.selfIntroduceId(), SessionType.MULTIPLE_CHOICE);
-        int sessionNumber = 1;
-        if (sessionNumberList.size() != 0) {
-            sessionNumber = sessionNumberList.get(0) + 1;
-        }
+        Integer sessionNumber = sessionRepository.findNextSessionNumber(request.selfIntroduceId(), SessionType.MULTIPLE_CHOICE);
         Session session = sessionRepository.save(new Session(null, sessionNumber, SessionType.MULTIPLE_CHOICE, selfIntroduce));
         List<GptMultipleChoiceDto> questionList = openAiService.gptMakeMultipleChoiceByContent(selfIntroduce.getContent());
         List<MakeMultipleChoiceResponse.Question> questions = new ArrayList<>();
-        System.out.println(questionList.toString());
         for (int i = 0; i < questionList.size(); i++) {
             MultipleChoiceQuestion questionEntity = MultipleChoiceQuestion.builder()
                     .questionNumber(i + 1)
@@ -60,7 +54,7 @@ public class MultipleChoiceService {
             MakeMultipleChoiceResponse.Question question = new MakeMultipleChoiceResponse.Question(questionList.get(i).question(), i + 1, questionList.get(i).option1(), questionList.get(i).option2(), questionList.get(i).option3(), questionList.get(i).option4(), questionList.get(i).option5());
             questions.add(question);
         }
-        return new MakeMultipleChoiceResponse(sessionNumber, questions);
+        return new MakeMultipleChoiceResponse(session.getId(), questions);
     }
 
     @Transactional

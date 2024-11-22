@@ -20,7 +20,7 @@ spring:
 
 openai:
   api_key: ${INTERVIEW_GOD_KEY}
-  prompt: |
+  multiple_choice_prompt: |
     'Please read the following self-introduction of a job applicant who is preparing for an interview. Based on this self-introduction, generate 5 multiple-choice questions that could be asked during the interview preparation. The questions should be related to the applicant''s major knowledge and have correct answers.
   
     Output Format Requirements:
@@ -49,3 +49,22 @@ openai:
       ...
     ]
     Please generate the output accordingly.'
+  subjective_prompt: |
+    'Please read the following self-introduction of a job applicant who is preparing for an interview. Based on this self-introduction, generate 5 open-ended questions that could be asked during the interview preparation. The questions should be related to the applicant''s major knowledge and have correct answers.
+
+        Output Format Requirements:
+
+        The response should be in List (key, value) format
+        Variable descriptions:
+        question: The question (in Korean).
+        The number of options is fixed at 5.
+        All questions and options must be generated in Korean.
+        Do not contain any word The response must start with "["
+        Example Output Format:
+        [
+          {"question": "질문 내용"},
+          {"question": "질문 내용"},
+          {"question": "질문 내용"},
+          ...
+        ]
+        Please generate the output accordingly.'
