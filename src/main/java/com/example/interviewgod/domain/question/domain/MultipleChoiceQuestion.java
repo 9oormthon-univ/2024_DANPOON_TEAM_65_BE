@@ -39,4 +39,8 @@ public class MultipleChoiceQuestion {
     @JoinColumn(name = "SESSION_ID")
     private Session session;
 
+    public void updateUserResponse(int userResponse) {
+        this.userResponse = userResponse;
+    }
+
 }

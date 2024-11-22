@@ -67,6 +67,7 @@ public class MultipleChoiceService {
             if (questionList.get(i).getAnswer() == request.answer().get(i)) {
                 isCorrect = true;
             }
+            questionList.get(i).updateUserResponse(request.answer().get(i));
             SubmitAnswerResponse.SubmitAnswerResult submitAnswerResult = new SubmitAnswerResponse.SubmitAnswerResult(questionList.get(i).getQuestionNumber(), isCorrect, questionList.get(i).getReason());
             results.add(submitAnswerResult);
         }
@@ -89,7 +90,7 @@ public class MultipleChoiceService {
                     .option4(multipleChoice.getOption4())
                     .option5(multipleChoice.getOption5())
                     .answer(multipleChoice.getAnswer())
-                    .myResponse(multipleChoice.getAnswer())
+                    .myResponse(multipleChoice.getUserResponse())
                     .reason(multipleChoice.getReason())
                     .build()
             );
