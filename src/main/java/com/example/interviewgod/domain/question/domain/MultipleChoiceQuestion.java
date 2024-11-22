@@ -1,7 +1,13 @@
 package com.example.interviewgod.domain.question.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 public class MultipleChoiceQuestion {
 
@@ -28,4 +34,5 @@ public class MultipleChoiceQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_ID")
     private Session session;
+
 }

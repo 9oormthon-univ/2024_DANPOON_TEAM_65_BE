@@ -2,7 +2,13 @@ package com.example.interviewgod.domain.question.domain;
 
 import com.example.interviewgod.domain.selfIntroduce.domain.SelfIntroduce;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Session {
 

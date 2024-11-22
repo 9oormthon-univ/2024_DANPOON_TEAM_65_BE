@@ -3,15 +3,47 @@ spring:
   name: autumnLeavesHackerton
 
   datasource:
-    url: jdbc:mysql://localhost:3306/autumnLeaves
+    url: jdbc:mysql://localhost:3306/interview_god
     username:
-    password:
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-jpa:
-  hibernate:
-    ddl-auto: update
-    show-sql: true
-  properties:
+  jpa:
     hibernate:
-      format_sql: true
+      ddl-auto: update
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+openai:
+  api_key: ${INTERVIEW_GOD_KEY}
+  prompt: |
+    'Please read the following self-introduction of a job applicant who is preparing for an interview. Based on this self-introduction, generate 5 multiple-choice questions that could be asked during the interview preparation. The questions should be related to the applicant''s major knowledge and have correct answers.
+  
+    Output Format Requirements:
+  
+    The response should be in JSON format as a list of GptMultipleChoiceDto objects.
+    Variable descriptions:
+    question: The question (in Korean).
+    answer: The correct answer to the question, represented as a number between 1 and 5.
+    option1 to option5: The multiple-choice options (in Korean).
+    The number of options is fixed at 5.
+    All questions and options must be generated in Korean.
+    Do not contain any word The response must start with "["
+    Example Output JSON Format:
+    [
+      {
+        "question": "질문 내용",
+        "answer": 1,
+        "option1": "보기1",
+        "option2": "보기2",
+        "option3": "보기3",
+        "option4": "보기4",
+        "option5": "보기5"
+      },
+      ...
+    ]
+    Please generate the output accordingly.'

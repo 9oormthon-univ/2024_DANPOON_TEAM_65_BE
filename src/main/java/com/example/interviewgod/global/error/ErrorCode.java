@@ -17,8 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_AUTHORIZATION_HEADER(40401, HttpStatus.NOT_FOUND, "Authorization 헤더가 존재하지 않습니다."),
     NOT_FOUND_USER(40402, HttpStatus.NOT_FOUND, "해당 사용자가 존재하지 않습니다."),
     NOT_FOUND_SHARED_URL(40403, HttpStatus.NOT_FOUND, "해당 공유 URL이 존재하지 않습니다."),
-    NOT_FOUND_MEMO(40404, HttpStatus.NOT_FOUND, "해당 메모가 존재하지 않습니다"),
-    NOT_FOUND_PAGE(40405, HttpStatus.NOT_FOUND, "해당 페이지가 존재하지 않습니다"),
+    NOT_FOUND_SELF_INTRODUCE(40404, HttpStatus.NOT_FOUND, "해당 자소서가 존재하지 않습니다"),
 
 
     // Invalid Argument Error
@@ -54,7 +53,8 @@ public enum ErrorCode {
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러입니다."),
-    UPLOAD_FILE_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다.");
+    UPLOAD_FILE_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다."),
+    INVALID_GPT_RESPONSE(50002, HttpStatus.INTERNAL_SERVER_ERROR, "GPT의 응답 형식이 잘못되었습니다");
 
     private final Integer code;
     private final HttpStatus httpStatus;
