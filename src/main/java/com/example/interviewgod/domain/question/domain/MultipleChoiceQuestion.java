@@ -33,6 +33,7 @@ public class MultipleChoiceQuestion {
     @Lob
     private String reason;
     private int answer;
+    private int userResponse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_ID")
