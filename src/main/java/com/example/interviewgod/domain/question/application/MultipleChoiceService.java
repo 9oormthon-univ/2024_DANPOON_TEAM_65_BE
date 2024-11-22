@@ -8,6 +8,7 @@ import com.example.interviewgod.domain.question.domain.repository.SessionReposit
 import com.example.interviewgod.domain.question.dto.gpt.GptMultipleChoiceDto;
 import com.example.interviewgod.domain.question.dto.request.MakeMultipleChoiceRequest;
 import com.example.interviewgod.domain.question.dto.request.SubmitAnswerRequest;
+import com.example.interviewgod.domain.question.dto.response.AllMultipleChoiceResponse;
 import com.example.interviewgod.domain.question.dto.response.MakeMultipleChoiceResponse;
 import com.example.interviewgod.domain.question.dto.response.SubmitAnswerResponse;
 import com.example.interviewgod.domain.selfIntroduce.domain.SelfIntroduce;
@@ -59,7 +60,7 @@ public class MultipleChoiceService {
 
     @Transactional
     public SubmitAnswerResponse submitAnswer(SubmitAnswerRequest request) {
-        List<MultipleChoiceQuestion> questionList = multipleChoiceRepository.findMultipleChoiceQuestionBySessionId(request.sessionId());
+        List<MultipleChoiceQuestion> questionList = multipleChoiceRepository.findBySessionId(request.sessionId());
         List<SubmitAnswerResponse.SubmitAnswerResult> results = new ArrayList<>();
         for (int i = 0; i < questionList.size(); i++) {
             boolean isCorrect = false;
@@ -70,6 +71,30 @@ public class MultipleChoiceService {
             results.add(submitAnswerResult);
         }
         return new SubmitAnswerResponse(results);
+    }
+
+
+    public AllMultipleChoiceResponse findAllMultipleChoiceQuestion(Long selfIntroduceId) {
+        SelfIntroduce selfIntroduce = selfIntroduceRepository.findById(selfIntroduceId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_SELF_INTRODUCE));
+        List<Integer> sessionIdList = sessionRepository.findAllSessionIdBySelfIntroduceId(selfIntroduceId, SessionType.MULTIPLE_CHOICE);
+        List<MultipleChoiceQuestion> multipleChoiceList = multipleChoiceRepository.findBySessionIdList(sessionIdList);
+        List<AllMultipleChoiceResponse.MultipleChoiceDto> questionSet = new ArrayList<>();
+        for (MultipleChoiceQuestion multipleChoice : multipleChoiceList) {
+            questionSet.add(AllMultipleChoiceResponse.MultipleChoiceDto.builder()
+                    .question(multipleChoice.getQuestion())
+                    .questionNumber(multipleChoice.getQuestionNumber())
+                    .option1(multipleChoice.getOption1())
+                    .option2(multipleChoice.getOption2())
+                    .option3(multipleChoice.getOption3())
+                    .option4(multipleChoice.getOption4())
+                    .option5(multipleChoice.getOption5())
+                    .answer(multipleChoice.getAnswer())
+                    .myResponse(multipleChoice.getAnswer())
+                    .reason(multipleChoice.getReason())
+                    .build()
+            );
+        }
+        return new AllMultipleChoiceResponse(selfIntroduce.getTitle(), selfIntroduce.getContent(), questionSet);
     }
 
 }

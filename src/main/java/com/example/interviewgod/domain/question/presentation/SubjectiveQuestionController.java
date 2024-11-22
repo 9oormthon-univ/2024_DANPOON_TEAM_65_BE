@@ -1,15 +1,13 @@
 package com.example.interviewgod.domain.question.presentation;
 
 import com.example.interviewgod.domain.question.application.SubjectiveQuestionService;
-import com.example.interviewgod.domain.question.dto.request.AllSubjectiveQuestionResponse;
+import com.example.interviewgod.domain.question.dto.response.AllSubjectiveQuestionResponse;
 import com.example.interviewgod.domain.question.dto.request.MakeSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.request.SubmitSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.response.MakeSubjectiveQuestionResponse;
 import com.example.interviewgod.domain.question.dto.response.SubmitSubjectiveQuestionResponse;
 import com.example.interviewgod.global.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 

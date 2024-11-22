@@ -12,6 +12,9 @@ import java.util.List;
 public interface MultipleChoiceRepository extends JpaRepository<MultipleChoiceQuestion, Long> {
 
     @Query("select mq from MultipleChoiceQuestion mq where mq.session.id = :sessionId order by mq.questionNumber")
-    List<MultipleChoiceQuestion> findMultipleChoiceQuestionBySessionId(@Param("sessionId") Long sessionId);
+    List<MultipleChoiceQuestion> findBySessionId(@Param("sessionId") Long sessionId);
+
+    @Query("select mq from MultipleChoiceQuestion mq where mq.session.id in :sessionIdList order by mq.session.id, mq.questionNumber")
+    List<MultipleChoiceQuestion> findBySessionIdList(@Param("sessionIdList") List<Integer> sessionIdList);
 
 }

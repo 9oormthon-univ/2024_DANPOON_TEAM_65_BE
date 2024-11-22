@@ -6,7 +6,7 @@ import com.example.interviewgod.domain.question.domain.SubjectiveQuestion;
 import com.example.interviewgod.domain.question.domain.repository.SessionRepository;
 import com.example.interviewgod.domain.question.domain.repository.SubjectiveRepository;
 import com.example.interviewgod.domain.question.dto.gpt.GptSubjectiveDto;
-import com.example.interviewgod.domain.question.dto.request.AllSubjectiveQuestionResponse;
+import com.example.interviewgod.domain.question.dto.response.AllSubjectiveQuestionResponse;
 import com.example.interviewgod.domain.question.dto.request.MakeSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.request.SubmitSubjectiveQuestionRequest;
 import com.example.interviewgod.domain.question.dto.response.MakeSubjectiveQuestionResponse;
@@ -62,11 +62,11 @@ public class SubjectiveQuestionService {
         List<Integer> sessionIdList = sessionRepository.findAllSessionIdBySelfIntroduceId(selfIntroduceId, SessionType.SUBJECTIVE);
         List<SubjectiveQuestion> allSubjectiveQuestion = subjectiveRepository.findBySessionIdList(sessionIdList);
 
-        List<AllSubjectiveQuestionResponse.SubjectiveQuestionDto> subjectiveQuestionDtoList = new ArrayList<>();
+        List<AllSubjectiveQuestionResponse.SubjectiveQuestionDto> questionSet = new ArrayList<>();
         for (SubjectiveQuestion question : allSubjectiveQuestion) {
-            subjectiveQuestionDtoList.add(new AllSubjectiveQuestionResponse.SubjectiveQuestionDto(question.getQuestion(), question.getQuestionNumber(), question.getUserResponse()));
+            questionSet.add(new AllSubjectiveQuestionResponse.SubjectiveQuestionDto(question.getQuestion(), question.getQuestionNumber(), question.getUserResponse()));
         }
-        return new AllSubjectiveQuestionResponse(selfIntroduce.getTitle(), selfIntroduce.getContent(), subjectiveQuestionDtoList);
+        return new AllSubjectiveQuestionResponse(selfIntroduce.getTitle(), selfIntroduce.getContent(), questionSet);
     }
 
 }

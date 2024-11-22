@@ -1,4 +1,4 @@
-package com.example.interviewgod.domain.question.dto.request;
+package com.example.interviewgod.domain.question.dto.response;
 
 import com.example.interviewgod.domain.question.domain.SubjectiveQuestion;
 
