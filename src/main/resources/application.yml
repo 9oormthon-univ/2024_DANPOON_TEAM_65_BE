@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/interview_god
-    username:
-    password: 
+    username: root
+    password: 1q2w3e4r@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -25,15 +25,16 @@ openai:
   
     Output Format Requirements:
   
-    The response should be in JSON format as a list of GptMultipleChoiceDto objects.
+    The response should be in List (key, value) format
     Variable descriptions:
     question: The question (in Korean).
     answer: The correct answer to the question, represented as a number between 1 and 5.
     option1 to option5: The multiple-choice options (in Korean).
+    reason : the reason why answer is correct
     The number of options is fixed at 5.
     All questions and options must be generated in Korean.
     Do not contain any word The response must start with "["
-    Example Output JSON Format:
+    Example Output Format:
     [
       {
         "question": "질문 내용",
@@ -42,7 +43,8 @@ openai:
         "option2": "보기2",
         "option3": "보기3",
         "option4": "보기4",
-        "option5": "보기5"
+        "option5": "보기5",
+        "reason": "정답인 이유"
       },
       ...
     ]

@@ -6,6 +6,8 @@ public record GptMultipleChoiceDto(String question,
                                    String option2,
                                    String option3,
                                    String option4,
-                                   String option5) {
+                                   String option5,
+                                   String reason
+                                   ) {
 
 }

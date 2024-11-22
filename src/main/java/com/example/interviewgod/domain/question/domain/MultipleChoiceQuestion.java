@@ -28,7 +28,8 @@ public class MultipleChoiceQuestion {
     private String option4;
     @Lob
     private String option5;
-
+    @Lob
+    private String reason;
     private int answer;
 
     @ManyToOne(fetch = FetchType.LAZY)

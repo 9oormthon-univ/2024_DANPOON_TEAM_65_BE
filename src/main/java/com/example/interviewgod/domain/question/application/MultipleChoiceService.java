@@ -51,6 +51,7 @@ public class MultipleChoiceService {
                     .option4(questionList.get(i).option4())
                     .option5(questionList.get(i).option5())
                     .answer(questionList.get(i).answer())
+                    .reason(questionList.get(i).reason())
                     .session(session)
                     .build();
             MultipleChoiceQuestion save = multipleChoiceRepository.save(questionEntity);
