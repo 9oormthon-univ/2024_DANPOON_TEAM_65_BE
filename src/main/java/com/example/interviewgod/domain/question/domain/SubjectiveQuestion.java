@@ -1,7 +1,15 @@
-package com.example.interviewgod.domain.question;
+package com.example.interviewgod.domain.question.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
 @Entity
 public class SubjectiveQuestion {
 
@@ -20,5 +28,9 @@ public class SubjectiveQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_ID")
     private Session session;
+
+    public void updateUserResponse(String userResponse) {
+        this.userResponse = userResponse;
+    }
 
 }
