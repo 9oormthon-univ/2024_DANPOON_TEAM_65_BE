@@ -3,15 +3,24 @@ spring:
   name: autumnLeavesHackerton
 
   datasource:
-    url: jdbc:mysql://localhost:3306/autumnLeaves
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/danpoon
+    username: root
+    password: dntjr3500
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-jpa:
-  hibernate:
-    ddl-auto: update
-    show-sql: true
-  properties:
+  jpa:
     hibernate:
-      format_sql: true
+      ddl-auto: update
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    logging.level:
+      org.hibernate.SQL: debug
+      org.hibernate.type: trace
+JWT:
+  SECRET-KEY: DanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooN
+KAKAO:
+  KEY:
+    CLIENT-ID: 32465bf1aa11577f83752c92aa01a8fd
+  REDIRECT-URI: http://localhost:3000/api/user/login/oauth/kakao
