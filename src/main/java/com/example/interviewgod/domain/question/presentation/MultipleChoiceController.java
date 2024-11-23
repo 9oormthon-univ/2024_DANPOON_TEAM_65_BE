@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/multipleChoice")
+@CrossOrigin("*")
 public class MultipleChoiceController {
 
     private final MultipleChoiceService multipleChoiceService;

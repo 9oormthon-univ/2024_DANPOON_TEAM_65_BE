@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/subjective")
 @RestController
+@CrossOrigin("*")
 public class SubjectiveQuestionController {
 
     private final SubjectiveQuestionService subjectiveQuestionService;

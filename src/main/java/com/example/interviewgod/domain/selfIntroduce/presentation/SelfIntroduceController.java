@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController()
 @RequestMapping("/api/selfIntroduce")
+@CrossOrigin("*")
 public class SelfIntroduceController {
 
     private final SelfIntroduceService selfIntroduceService;
