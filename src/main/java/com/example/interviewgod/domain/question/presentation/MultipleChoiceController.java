@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/multipleChoice")
+@RequestMapping("/api/multipleChoice")
 public class MultipleChoiceController {
 
     private final MultipleChoiceService multipleChoiceService;

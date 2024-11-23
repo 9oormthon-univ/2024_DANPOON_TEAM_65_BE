@@ -6,6 +6,7 @@ import com.example.interviewgod.domain.selfIntroduce.dto.response.AllSelfIntrodu
 import com.example.interviewgod.domain.selfIntroduce.dto.response.SaveSelfIntroduceResponse;
 import com.example.interviewgod.global.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +18,14 @@ public class SelfIntroduceController {
     private final SelfIntroduceService selfIntroduceService;
 
     @PostMapping
-    public ResponseDto<SaveSelfIntroduceResponse> saveSelfIntroduce(@RequestBody SaveSelfIntroduceRequest selfIntroduceRequest) {
-        SaveSelfIntroduceResponse saveSelfIntroduceResponse = selfIntroduceService.saveSelfIntroduce(selfIntroduceRequest);
+    public ResponseDto<SaveSelfIntroduceResponse> saveSelfIntroduce(@RequestBody SaveSelfIntroduceRequest selfIntroduceRequest, Authentication authentication) {
+        SaveSelfIntroduceResponse saveSelfIntroduceResponse = selfIntroduceService.saveSelfIntroduce(selfIntroduceRequest, authentication);
         return ResponseDto.ok(saveSelfIntroduceResponse);
     }
 
     @GetMapping()
-    public ResponseDto<AllSelfIntroduceResponse> getAllSelfIntroduce() {
-        AllSelfIntroduceResponse allSelfIntroduce = selfIntroduceService.getAllSelfIntroduce();
+    public ResponseDto<AllSelfIntroduceResponse> getAllSelfIntroduce(Authentication authentication) {
+        AllSelfIntroduceResponse allSelfIntroduce = selfIntroduceService.getAllSelfIntroduce(authentication);
         return ResponseDto.ok(allSelfIntroduce);
     }
 

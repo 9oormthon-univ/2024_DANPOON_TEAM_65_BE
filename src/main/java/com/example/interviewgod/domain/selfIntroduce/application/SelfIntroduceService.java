@@ -7,13 +7,16 @@ import com.example.interviewgod.domain.selfIntroduce.dto.response.AllSelfIntrodu
 import com.example.interviewgod.domain.selfIntroduce.dto.response.SaveSelfIntroduceResponse;
 import com.example.interviewgod.domain.user.User;
 import com.example.interviewgod.domain.user.repository.UserRepository;
+import com.example.interviewgod.domain.user.service.UserService;
 import com.example.interviewgod.global.error.CommonException;
 import com.example.interviewgod.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -22,21 +25,24 @@ public class SelfIntroduceService {
 
     private final SelfIntroduceRepository selfIntroduceRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @Transactional
-    public SaveSelfIntroduceResponse saveSelfIntroduce(SaveSelfIntroduceRequest dto) {
+    public SaveSelfIntroduceResponse saveSelfIntroduce(SaveSelfIntroduceRequest dto, Authentication authentication) {
         //추후 user에서 가지고 오는것으로 수정
-        User user = userRepository.findById(1L).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userService.checkPermission(authentication).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        //User user = userRepository.findById(1L).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         SelfIntroduce selfIntroduce = new SelfIntroduce(null, dto.title(), dto.content(), user);
         SelfIntroduce save = selfIntroduceRepository.save(selfIntroduce);
         return new SaveSelfIntroduceResponse(save.getId());
     }
 
-    public AllSelfIntroduceResponse getAllSelfIntroduce() {
+    public AllSelfIntroduceResponse getAllSelfIntroduce(Authentication authentication) {
         //추후 user에서 가지고 오는것으로 수정
+        User user = userService.checkPermission(authentication).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         //User user = userRepository.findById(1L).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        User user = userRepository.findUserByEmail("email").orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        //User user = userRepository.findUserByEmail("email").orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         List<AllSelfIntroduceResponse.SelfIntroduceDto> selfIntroduceSet = user.getSelfIntroductions().stream()
                 .map(selfIntroduce -> new AllSelfIntroduceResponse.SelfIntroduceDto(
                         selfIntroduce.getTitle(),

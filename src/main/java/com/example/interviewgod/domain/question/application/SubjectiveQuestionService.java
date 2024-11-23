@@ -40,12 +40,12 @@ public class SubjectiveQuestionService {
         Session session = sessionRepository.save(new Session(null, nextSessionNumber, SessionType.SUBJECTIVE, selfIntroduce));
         for (int i = 0; i < gptSubjectiveDtoList.size(); i++) {
             SubjectiveQuestion subjectiveQuestion = SubjectiveQuestion.builder()
-                    .questionNumber(i + 1)
+                    .questionNumber((nextSessionNumber*5)+ i + 1)
                     .question(gptSubjectiveDtoList.get(i).question())
                     .session(session)
                     .build();
             SubjectiveQuestion save = subjectiveRepository.save(subjectiveQuestion);
-            questionSet.add(new MakeSubjectiveQuestionResponse.MadeSubjectiveQuestion(gptSubjectiveDtoList.get(i).question(), i + 1));
+            questionSet.add(new MakeSubjectiveQuestionResponse.MadeSubjectiveQuestion(gptSubjectiveDtoList.get(i).question(), save.getQuestionNumber()));
         }
         return new MakeSubjectiveQuestionResponse(session.getId(), questionSet);
     }

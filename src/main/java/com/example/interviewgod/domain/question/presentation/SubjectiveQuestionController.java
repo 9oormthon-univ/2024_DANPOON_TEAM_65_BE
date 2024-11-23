@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
-@RequestMapping("/subjective")
+@RequestMapping("/api/subjective")
 @RestController
 public class SubjectiveQuestionController {
 
