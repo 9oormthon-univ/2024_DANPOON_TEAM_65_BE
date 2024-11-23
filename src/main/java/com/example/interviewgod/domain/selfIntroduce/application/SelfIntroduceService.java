@@ -6,7 +6,7 @@ import com.example.interviewgod.domain.selfIntroduce.dto.request.SaveSelfIntrodu
 import com.example.interviewgod.domain.selfIntroduce.dto.response.AllSelfIntroduceResponse;
 import com.example.interviewgod.domain.selfIntroduce.dto.response.SaveSelfIntroduceResponse;
 import com.example.interviewgod.domain.user.User;
-import com.example.interviewgod.domain.user.UserRepository;
+import com.example.interviewgod.domain.user.repository.UserRepository;
 import com.example.interviewgod.global.error.CommonException;
 import com.example.interviewgod.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

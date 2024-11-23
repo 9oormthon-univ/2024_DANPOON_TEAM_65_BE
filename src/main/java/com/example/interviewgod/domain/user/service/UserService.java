@@ -1,6 +1,7 @@
 package com.example.interviewgod.domain.user.service;
 
 import com.example.interviewgod.domain.user.User;
+import com.example.interviewgod.domain.user.UserType;
 import com.example.interviewgod.domain.user.dto.LoginRequestDTO;
 import com.example.interviewgod.domain.user.dto.LoginResponseDTO;
 import com.example.interviewgod.domain.user.dto.MemberDTO;
@@ -34,7 +35,7 @@ public class UserService {
 
     public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequestDTO) {
         //AccessToken 만들어서 줘야함
-        Optional<User> byEmail = userRepository.findByEmail(loginRequestDTO.getEmail());
+        Optional<User> byEmail = userRepository.findUserByEmail(loginRequestDTO.getEmail());
         if (byEmail.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else if (!passwordEncoder.matches(loginRequestDTO.getPassword(), byEmail.get().getPassword())) {
@@ -57,7 +58,7 @@ public class UserService {
                     .name(memberDTO.getName())
                     .email(memberDTO.getEmail())
                     .password(encoded)
-                    .userType("STANDARD")
+                    .userType(UserType.STANDARD)
                     .build());
 
             // 저장된 객체가 null인 경우 처리
@@ -70,11 +71,11 @@ public class UserService {
     }
 
     public ResponseEntity<Boolean> isEmailEmpty(String email) {
-        return new ResponseEntity<>(userRepository.findByEmail(email).isEmpty(), HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findUserByEmail(email).isEmpty(), HttpStatus.OK);
     }
 
     public Optional<User> checkPermission(Authentication authentication){
         String email = authentication.getName();
-        return userRepository.findByEmail(email);
+        return userRepository.findUserByEmail(email) ;
     }
 }

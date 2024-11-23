@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -41,11 +39,11 @@ public class User {
     private List<SelfIntroduce> selfIntroductions = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, Long uid, String userType) {
+    public User(String email, String password, String name, Long uid, UserType userType) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.uid = uid;
-        this.userType = UserType.valueOf(userType);
+        this.userType = userType;
     }
 }

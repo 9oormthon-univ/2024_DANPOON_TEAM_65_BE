@@ -1,6 +1,7 @@
 package com.example.interviewgod.domain.user.service;
 
 import com.example.interviewgod.domain.user.User;
+import com.example.interviewgod.domain.user.UserType;
 import com.example.interviewgod.domain.user.dto.LoginResponseDTO;
 import com.example.interviewgod.domain.user.jwt.JwtTokenProvider;
 import com.example.interviewgod.domain.user.repository.UserRepository;
@@ -124,14 +125,14 @@ public class KakaoService {
         String kakaoEmail = userInfo.get("email").toString();
         String nickName = userInfo.get("nickname").toString();
 
-        User kakaoUser = userRepository.findByEmail(kakaoEmail).orElse(null);
+        User kakaoUser = userRepository.findUserByEmail(kakaoEmail).orElse(null);
 
         if (kakaoUser == null) {    //회원가입
             kakaoUser = User.builder()
                     .email(kakaoEmail)
                     .name(nickName)
                     .uid(uid)
-                    .userType("KAKAO")
+                    .userType(UserType.KAKAO)
                     .password("-1")
                     .build();
             userRepository.save(kakaoUser);
