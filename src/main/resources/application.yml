@@ -1,12 +1,15 @@
 spring:
   application:
-  name: autumnLeavesHackerton
-
+    name: autumnLeavesHackerton
+  config:
+    import: optional:file:dev.env[.properties]
+  profiles:
+    include: secret
   datasource:
-    url: jdbc:mysql://localhost:3306/danpoon
-    username: root
-    password: dntjr3500
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,9 +21,11 @@ spring:
     logging.level:
       org.hibernate.SQL: debug
       org.hibernate.type: trace
+  jackson:
+    property-naming-strategy: SNAKE_CASE
 JWT:
-  SECRET-KEY: DanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooNDanPooN
+  SECRET-KEY: ${JWT_KEY}
 KAKAO:
   KEY:
-    CLIENT-ID: 32465bf1aa11577f83752c92aa01a8fd
-  REDIRECT-URI: http://localhost:3000/api/user/login/oauth/kakao
+    CLIENT-ID: ${CLIENT-ID}
+  REDIRECT-URI: ${REDIRECT-URI}
