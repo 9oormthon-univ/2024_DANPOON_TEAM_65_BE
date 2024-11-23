@@ -1,6 +1,7 @@
 package com.example.interviewgod.domain.user.service;
 
 import com.example.interviewgod.domain.user.User;
+import com.example.interviewgod.domain.user.UserType;
 import com.example.interviewgod.domain.user.dto.LoginResponseDTO;
 import com.example.interviewgod.domain.user.jwt.JwtTokenProvider;
 import com.example.interviewgod.domain.user.repository.UserRepository;
@@ -131,7 +132,7 @@ public class KakaoService {
                     .email(kakaoEmail)
                     .name(nickName)
                     .uid(uid)
-                    .userType("KAKAO")
+                    .userType(UserType.KAKAO)
                     .password("-1")
                     .build();
             userRepository.save(kakaoUser);

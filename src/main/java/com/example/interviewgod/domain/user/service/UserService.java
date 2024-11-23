@@ -1,6 +1,7 @@
 package com.example.interviewgod.domain.user.service;
 
 import com.example.interviewgod.domain.user.User;
+import com.example.interviewgod.domain.user.UserType;
 import com.example.interviewgod.domain.user.dto.LoginRequestDTO;
 import com.example.interviewgod.domain.user.dto.LoginResponseDTO;
 import com.example.interviewgod.domain.user.dto.MemberDTO;
@@ -57,7 +58,7 @@ public class UserService {
                     .name(memberDTO.getName())
                     .email(memberDTO.getEmail())
                     .password(encoded)
-                    .userType("STANDARD")
+                    .userType(UserType.STANDARD)
                     .build());
 
             // 저장된 객체가 null인 경우 처리
