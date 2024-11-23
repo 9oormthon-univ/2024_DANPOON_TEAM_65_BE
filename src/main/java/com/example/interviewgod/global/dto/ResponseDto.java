@@ -12,35 +12,36 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 public record ResponseDto<T>(@JsonIgnore HttpStatus httpStatus,
+                             @NotNull int statusCode,
                              @NotNull Boolean success,
                              @Nullable T data,
                              @Nullable ExceptionDto error) {
 
     public static <T> ResponseDto<T> ok(@Nullable final T data) {
-        return new ResponseDto<>(HttpStatus.OK, true, data, null);
+        return new ResponseDto<>(HttpStatus.OK, HttpStatus.OK.value(), true, data, null);
     }
 
     public static <T> ResponseDto<T> created(@Nullable final T data) {
-        return new ResponseDto<>(HttpStatus.CREATED, true, data, null);
+        return new ResponseDto<>(HttpStatus.CREATED, HttpStatus.CREATED.value(),true, data, null);
     }
 
     public static ResponseDto<Object> fail(final MethodArgumentNotValidException e) {
-        return new ResponseDto<>(HttpStatus.BAD_REQUEST, false, null,
+        return new ResponseDto<>(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), false, null,
                 new ExceptionDto(ErrorCode.INVALID_ARGUMENT));
     }
 
     public static ResponseDto<Object> fail(final MissingServletRequestParameterException e) {
-        return new ResponseDto<>(HttpStatus.BAD_REQUEST, false, null,
+        return new ResponseDto<>(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), false, null,
                 new ExceptionDto(ErrorCode.MISSING_REQUEST_PARAMETER));
     }
 
     public static ResponseDto<Object> fail(final MethodArgumentTypeMismatchException e) {
-        return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, false, null,
+        return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value(), false, null,
                 new ExceptionDto(ErrorCode.INVALID_PARAMETER_FORMAT));
     }
 
     public static ResponseDto<Object> fail(final CommonException e) {
-        return new ResponseDto<>(e.getErrorCode().getHttpStatus(), false, null,
+        return new ResponseDto<>(e.getErrorCode().getHttpStatus(), e.getErrorCode().getHttpStatus().value(), false, null,
                 new ExceptionDto(e.getErrorCode()));
     }
 }
